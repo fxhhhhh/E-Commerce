@@ -18,13 +18,22 @@ app.use(express.json())
 
 
 
+
+
 // set app
-app.use(morgan('tiny'))
-app.use('/',(req,res)=>{
-    res.send('e-commerce')
-})
+// app.use(morgan('tiny'))
+// app.use('/',(req,res)=>{
+//     res.send('e-commerce')
+// })
 // if not find the route, it will get into the middleware
 //set middleware
+
+
+
+const authRouter = require('./routes/authRouter');
+app.use('/auth', authRouter);
+
+
 app.use(notFoundMiddleware)
 app.use(errorHandleMiddleware)
 
@@ -34,7 +43,7 @@ app.use(errorHandleMiddleware)
 const connectDB = require('./db/connect')
 
 // set the port
-const port = process.env.port || 3000
+const port = 3000
 
 // listen the port
 const start= async ()=>{
