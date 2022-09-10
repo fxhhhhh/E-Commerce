@@ -3,6 +3,8 @@ const app = express()
 
 const notFoundMiddleware = require('./middleware/not-found')
 const errorHandleMiddleware = require('./middleware/error-handler')
+const cookieParser = require('cookie-parser');
+
 
 //login package
 const morgan = require('morgan')
@@ -14,25 +16,23 @@ require('dotenv').config()
 
 
 //set express.json()
-app.use(express.json())
-
-
+app.use(express.json());
+app.use(cookieParser(process.env.JWT_SECRET));
 
 
 
 // set app
-// app.use(morgan('tiny'))
-// app.use('/',(req,res)=>{
-//     res.send('e-commerce')
-// })
+
+
 // if not find the route, it will get into the middleware
 //set middleware
 
 
 
 const authRouter = require('./routes/authRouter');
+const userRouter = require('./routes/userRoutes');
 app.use('/auth', authRouter);
-
+app.use('/users', userRouter);
 
 app.use(notFoundMiddleware)
 app.use(errorHandleMiddleware)
